@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: spenev <spenev@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/27 12:13:19 by spenev            #+#    #+#             */
+/*   Updated: 2024/05/27 12:17:29 by spenev           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-int main(int argc, char *argv[], char *envp[]) {
-    pipex(argc, argv, envp);
-    return (0);
+int	main(int argc, char *argv[], char *envp[])
+{
+	pipex(argc, argv, envp);
+	return (0);
 }

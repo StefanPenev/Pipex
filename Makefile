@@ -1,12 +1,27 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: spenev <spenev@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/05/27 12:14:32 by spenev            #+#    #+#              #
+#    Updated: 2024/05/27 12:14:33 by spenev           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 PROG	= pipex
 
 SRCS 	= pipex.c utils.c main.c
 OBJS 	= ${SRCS:.c=.o}
 
-HEADER	= -Iincludes
-
 CC 		= gcc
 CFLAGS 	= -Wall -Wextra -Werror -g
+
+COLOR_RED = '\033[31m'
+COLOR_GREEN = '\033[32m'
+COLOR_BLUE = '\033[34m'
+COLOR_YELLOW = '\033[33m'
 
 .c.o:		%.o : %.c
 					@gcc ${CFLAGS} ${HEADER} -c $< -o $(<:.c=.o)
@@ -14,20 +29,22 @@ CFLAGS 	= -Wall -Wextra -Werror -g
 all: 		${PROG}
 
 ${PROG}:	${OBJS}
-					@echo "\033[33m----Compiling lib----"
+					@echo ${COLOR_BLUE}"----Compiling lib----"
 					@make re -C ./libft
 					@$(CC) ${OBJS} -Llibft -lft -o ${PROG}
-					@echo "\033[32mPipex Compiled!\n"
+					@echo ${COLOR_GREEN}"Pipex Compiled!\n\n\
+Example of using: $$> ./pipex infile \"ls -l\" \"wc -l\" outfile"
 
 clean:
 					@make clean -C ./libft
 					@rm -f ${OBJS} ${OBJS_B}
 
 fclean: 	clean
+					@echo ${COLOR_YELLOW}"Cleaning"
 					@make fclean -C ./libft
 					@rm -f $(NAME)
 					@rm -f ${PROG}
-					@echo "\n\033[31mCleaning Done!\n"
+					@echo ${COLOR_RED}"\nCleaning Done!\n"
 
 re:			fclean all
 
