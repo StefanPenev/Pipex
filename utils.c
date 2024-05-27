@@ -6,7 +6,7 @@
 /*   By: spenev <spenev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:14:25 by spenev            #+#    #+#             */
-/*   Updated: 2024/05/27 12:32:28 by spenev           ###   ########.fr       */
+/*   Updated: 2024/05/27 12:50:34 by spenev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_free(char **data)
 	free(data);
 }
 
-char	*ft_getenv(char *envp[], const char *name)
+static char	*ft_getenv(char *envp[], const char *name)
 {
 	char	**ep;
 	size_t	len;
@@ -75,7 +75,6 @@ char	*find_path(char *cmd, char **envp)
 		free(path);
 		i++;
 	}
-	//i = 0;
 	ft_free(paths);
 	return (0);
 }
