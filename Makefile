@@ -6,7 +6,7 @@
 #    By: spenev <spenev@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/27 12:14:32 by spenev            #+#    #+#              #
-#    Updated: 2024/05/27 12:46:17 by spenev           ###   ########.fr        #
+#    Updated: 2024/05/27 12:57:20 by spenev           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ ${PROG}:	${OBJS}
 					@make re -C ./libft
 					@$(CC) ${OBJS} -Llibft -lft -o ${PROG}
 					@echo ${COLOR_GREEN}"Pipex Compiled!\n\n\
-Example of using: $$> ./pipex infile \"ls -l\" \"wc -l\" outfile"
+Example of using: $$> ./pipex infile \"cmd1\" \"cmd2\" outfile"
 
 clean:
 					@make clean -C ./libft
