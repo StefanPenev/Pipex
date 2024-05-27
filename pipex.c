@@ -6,7 +6,7 @@
 /*   By: spenev <spenev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:13:32 by spenev            #+#    #+#             */
-/*   Updated: 2024/05/27 13:23:05 by spenev           ###   ########.fr       */
+/*   Updated: 2024/05/27 13:44:31 by spenev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	execute(char *argv, char **envp)
 	if (!path)
 	{
 		ft_free(cmd);
-		ft_perror(COLOR_RED"ERROR! Wrong command");
+		ft_perror(COLOR_RED"ERROR! Wrong command"COLOR_RESET);
 	}
 	if (execve(path, cmd, envp) == -1)
-		ft_perror(COLOR_RED"ERROR! Execution error");
+		ft_perror(COLOR_RED"ERROR! Execution error"COLOR_RESET);
 }
 
 void	parent_process(char *argv[], char *envp[], int fd[])
@@ -34,7 +34,7 @@ void	parent_process(char *argv[], char *envp[], int fd[])
 
 	fd_out = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd_out == -1)
-		ft_perror(COLOR_RED"ERROR! Output file");
+		ft_perror(COLOR_RED"ERROR! Output file"COLOR_RESET);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
 	close(fd[1]);
@@ -47,7 +47,7 @@ void	child_process(char *argv[], char *envp[], int fd[])
 
 	fd_in = open(argv[1], O_RDONLY, 0777);
 	if (fd_in == -1)
-		ft_perror(COLOR_RED"ERROR! Input file");
+		ft_perror(COLOR_RED"ERROR! Input file"COLOR_RESET);
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(fd_in, STDIN_FILENO);
 	close(fd[0]);
@@ -60,12 +60,12 @@ void	pipex(int argc, char *argv[], char *envp[])
 	int	pid1;
 
 	if (argc != 5)
-		ft_error(COLOR_RED"ERROR! Wrong number of arguments");
+		ft_error(COLOR_RED"ERROR! Wrong number of arguments"COLOR_RESET);
 	if (pipe(fd) == -1)
-		ft_perror(COLOR_RED"ERROR");
+		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
 	pid1 = fork();
 	if (pid1 == -1)
-		ft_perror(COLOR_RED"ERROR");
+		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
 	if (pid1 == 0)
 		child_process(argv, envp, fd);
 	waitpid(pid1, NULL, 0);

@@ -6,7 +6,7 @@
 /*   By: spenev <spenev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:14:25 by spenev            #+#    #+#             */
-/*   Updated: 2024/05/27 13:25:41 by spenev           ###   ########.fr       */
+/*   Updated: 2024/05/27 13:36:48 by spenev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_error(char *str)
 {
 	ft_putendl_fd(str, STDERR_FILENO);
 	ft_putendl_fd(COLOR_GREEN"\nExample of using:\
-$$> ./pipex infile \"cmd1\" \"cmd2\" outfile", STDERR_FILENO);
+$$> ./pipex infile \"cmd1\" \"cmd2\" outfile"COLOR_RESET, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 

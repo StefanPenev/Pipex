@@ -6,7 +6,7 @@
 /*   By: spenev <spenev@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:13:36 by spenev            #+#    #+#             */
-/*   Updated: 2024/05/27 13:23:49 by spenev           ###   ########.fr       */
+/*   Updated: 2024/05/27 13:33:59 by spenev           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define COLOR_RED "\033[0;31m"
 # define COLOR_GREEN "\033[0;32m"
+# define COLOR_RESET "\x1B[0m"
 
 void	ft_free(char **data);
 void	ft_error(char *str);
