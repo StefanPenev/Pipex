@@ -1,4 +1,4 @@
-# **`Pipex`**
+# <p align="center">**`Pipex`**</p>
 
 ## Description
 `Pipex` is a program that simulates the behavior of shell pipelines. The program takes four arguments: two filenames and two shell commands with their parameters. It replicates the behavior of the shell command:
@@ -18,7 +18,7 @@
 
 ## Examples
 ```bash
-1. $ ./pipex infile "ls -l" "wc -l" outfile
+$ ./pipex infile "ls -l" "wc -l" outfile
 ```
 ### This should behave like:
 ```bash
@@ -26,7 +26,7 @@
 ```
 ##
 ```bash
-2. $ ./pipex infile "grep a1" "wc -w" outfile
+$ ./pipex infile "grep a1" "wc -w" outfile
 ```
 ### This should behave like:
 ```bash
