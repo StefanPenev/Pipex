@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:13:32 by spenev            #+#    #+#             */
-/*   Updated: 2024/05/29 17:11:55 by stefan           ###   ########.fr       */
+/*   Updated: 2024/06/06 21:42:26 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,25 @@ void	pipex(int argc, char *argv[], char *envp[])
 {
 	int	fd[2];
 	int	pid1;
+	int pid2;
 
 	if (argc != 5)
 		ft_error(COLOR_RED"ERROR! Wrong number of arguments"COLOR_RESET);
 	if (pipe(fd) == -1)
 		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
 	pid1 = fork();
-	if (pid1 == -1)
+	if (pid1 < 0)
 		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
 	if (pid1 == 0)
 		child_process(argv, envp, fd);
+	pid2 = fork();
+	if (pid2 < 0)
+		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
+	if (pid2 == 0)
+		parent_process(argv, envp, fd);
+	// close(fd[0]);
+	// close(fd[1]);
 	waitpid(pid1, NULL, 0);
-	parent_process(argv, envp, fd);
+	waitpid(pid2, NULL, 0);
+	
 }
