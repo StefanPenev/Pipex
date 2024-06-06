@@ -11,10 +11,10 @@
 ```bash
 ./pipex file1 cmd1 cmd2 file2
 ```
-<br>file1: The name of the input file.</br>
-<br>cmd1: The first command to execute.</br>
-<br>cmd2: The second command to execute.</br>
-<br>file2: The name of the output file.</br>
+<br>file1: The name of the input file.
+<br>cmd1: The first command to execute.
+<br>cmd2: The second command to execute.
+<br>file2: The name of the output file.
 
 ## Examples
 ```bash
