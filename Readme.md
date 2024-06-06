@@ -11,10 +11,10 @@
 ```bash
 ./pipex file1 cmd1 cmd2 file2
 ```
-<br file1: The name of the input file./>
-cmd1: The first command to execute.
-cmd2: The second command to execute.
-file2: The name of the output file.
+<br>file1: The name of the input file.<br/>
+<br>cmd1: The first command to execute.<br/>
+<br>cmd2: The second command to execute.<br/>
+<br>file2: The name of the output file.<br/>
 
 ## Examples
 ```bash
@@ -24,6 +24,7 @@ $ ./pipex infile "ls -l" "wc -l" outfile
 ```bash
 < infile ls -l | wc -l > outfile
 ```
+##
 ```bash
 $ ./pipex infile "grep a1" "wc -w" outfile
 ```
