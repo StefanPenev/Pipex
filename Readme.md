@@ -17,6 +17,7 @@
 <br>file2: The name of the output file.
 
 ## Examples
+>
 ```bash
 $ ./pipex infile "ls -l" "wc -l" outfile
 ```
@@ -25,6 +26,7 @@ $ ./pipex infile "ls -l" "wc -l" outfile
 < infile ls -l | wc -l > outfile
 ```
 ##
+>
 ```bash
 $ ./pipex infile "grep a1" "wc -w" outfile
 ```
