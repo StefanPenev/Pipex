@@ -1,4 +1,4 @@
-# `Pipex`
+# **`Pipex`**
 
 ## Description
 `Pipex` is a program that simulates the behavior of shell pipelines. The program takes four arguments: two filenames and two shell commands with their parameters. It replicates the behavior of the shell command:
@@ -11,7 +11,7 @@
 ```bash
 ./pipex file1 cmd1 cmd2 file2
 ```
-file1: The name of the input file.
+<br file1: The name of the input file./>
 cmd1: The first command to execute.
 cmd2: The second command to execute.
 file2: The name of the output file.
