@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:13:32 by spenev            #+#    #+#             */
-/*   Updated: 2024/06/06 21:42:26 by stefan           ###   ########.fr       */
+/*   Updated: 2024/06/08 01:34:40 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	pipex(int argc, char *argv[], char *envp[])
 		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
 	if (pid2 == 0)
 		parent_process(argv, envp, fd);
-	// close(fd[0]);
-	// close(fd[1]);
+	close(fd[0]);
+	close(fd[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 	

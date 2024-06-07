@@ -1,5 +1,16 @@
 #!/bin/bash
 
+#Colors
+NC="\033[0m"
+CYAN="\033[36m"
+BOLD="\033[1m"
+ULINE="\033[4m"
+RED="\033[31m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+BLUE="\033[34m"
+PURPLE="\033[35m"
+
 # Compile the pipex program
 make re
 
@@ -34,9 +45,9 @@ ELAPSED_TIME=$(($END_TIME - $START_TIME))
 
 # Check if the program was killed by the watchdog
 if [ $EXIT_STATUS -eq 137 ]; then
-    echo "pipex timed out after $TIMEOUT_DURATION seconds."
+    printf "${RED}Pipex timed out after $TIMEOUT_DURATION seconds.${NC}"
 else
-    echo "pipex completed successfully in $ELAPSED_TIME seconds."
+    printf "${GREEN}pipex completed successfully in $ELAPSED_TIME seconds.${NC}"
 fi
 
 # Display the output of the pipex program if it didn't timeout
