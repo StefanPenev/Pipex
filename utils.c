@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spenev <spenev@student.42.fr>              +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:14:25 by spenev            #+#    #+#             */
-/*   Updated: 2024/05/27 13:36:48 by spenev           ###   ########.fr       */
+/*   Updated: 2024/06/13 11:16:20 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ char	*find_path(char *cmd, char **envp)
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
-		if (access(path, F_OK) == 0)
+		if (access(path, F_OK | X_OK) == 0)
 			return (path);
 		free(path);
 		i++;
 	}
 	ft_free(paths);
-	return (0);
+	return (cmd);
 }

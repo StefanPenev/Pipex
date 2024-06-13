@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:13:32 by spenev            #+#    #+#             */
-/*   Updated: 2024/06/08 01:34:40 by stefan           ###   ########.fr       */
+/*   Updated: 2024/06/13 15:08:59 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	execute(char *argv, char **envp)
 		ft_perror(COLOR_RED"ERROR! Execution error"COLOR_RESET);
 }
 
-void	parent_process(char *argv[], char *envp[], int fd[])
+void	second_process(char *argv[], char *envp[], int fd[])
 {
 	int	fd_out;
 
@@ -41,7 +41,7 @@ void	parent_process(char *argv[], char *envp[], int fd[])
 	execute(argv[3], envp);
 }
 
-void	child_process(char *argv[], char *envp[], int fd[])
+void	first_process(char *argv[], char *envp[], int fd[])
 {
 	int	fd_in;
 
@@ -68,12 +68,12 @@ void	pipex(int argc, char *argv[], char *envp[])
 	if (pid1 < 0)
 		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
 	if (pid1 == 0)
-		child_process(argv, envp, fd);
+		first_process(argv, envp, fd);
 	pid2 = fork();
 	if (pid2 < 0)
 		ft_perror(COLOR_RED"ERROR"COLOR_RESET);
 	if (pid2 == 0)
-		parent_process(argv, envp, fd);
+		second_process(argv, envp, fd);
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, NULL, 0);
