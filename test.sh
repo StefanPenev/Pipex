@@ -23,7 +23,7 @@ BLUE="\033[34m"
 VALGRIND="valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes"
 
 COMMAND_WITH_PATH=/bin/cat
-LEAK_TOGGLE=0
+LEAK_TOGGLE=1
 num=0
 
 banner=(
@@ -68,15 +68,17 @@ compare_outputs() {
     else
         result="FAIL"
         color="$RED"
-        diff --color -c "$OUTPUT_EXPECTED" "$OUTPUT_PIPEX" > "Tests/outs/test-$num.txt"
-        printf "\r%s    --%s%s\n" "$color" "ERROR: check /Tests/outs/test-$num.txt for more information." "$NC"
+        diff "$OUTPUT_EXPECTED" "$OUTPUT_PIPEX" > Tests/outs/test-$num.txt
+        printf "\r${color}    --ERROR: check /Tests/outs/test-$num.txt for more information.{$NC}"
     fi
     printf "\r${color} %-68s [%s]${NC}\n" " " "$result"
 }
 
+delete_files "Tests/outs"
+
 #Norminette
 ((num++))
-norminette > Tests/outs/norminette.txt 2>&1
+norminette > "Tests/outs/norminette.txt" 2>&1
 
 if grep -q "Error" Tests/outs/norminette.txt || [ -s Tests/outs/norminette.txt ]; then
     result="FAIL"
@@ -122,8 +124,6 @@ if [ "$result" = "FAIL" ];  then
     printf "\r${color}    --%s${NC}\n\n" "Pipex is not executable or \"./pipex\" does not exist."
 fi
 
-delete_files "Tests/outs"
-
 #Tests
 ##
 ((num++))
@@ -133,7 +133,7 @@ printf "${ULINE}Shell command: ${BOLD}${BLUE}<$INPUT cat | wc -l > $OUTPUT_EXPEC
 printf "${ULINE}Pipex command: ${BOLD}${BLUE}./pipex $INPUT \"cat\" \"wc -l\" $OUTPUT_PIPEX${NC}\n"
 ./pipex $INPUT "cat" "wc -l" $OUTPUT_PIPEX
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then 
     printf "Leak check:${BLUE}\n"
@@ -148,7 +148,7 @@ printf "${ULINE}Shell command: ${BOLD}${BLUE}<$INPUT cat | grep Lorem > $OUTPUT_
 printf "${ULINE}Pipex command: ${BOLD}${BLUE}./pipex $INPUT \"cat\" \"grep Lorem\" $OUTPUT_PIPEX${NC}\n"
 ./pipex $INPUT "cat" "grep Lorem" $OUTPUT_PIPEX
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -163,7 +163,7 @@ printf "${ULINE}Shell command: ${BOLD}${BLUE}<$INPUT grep aaaaaa | wc -l > $OUTP
 printf "${ULINE}Pipex command: ${BOLD}${BLUE}./pipex $INPUT \"grep aaaaaa\" \"wc -l\" $OUTPUT_PIPEX${NC}\n"
 ./pipex $INPUT "grep aaaaaa" "wc -l" $OUTPUT_PIPEX
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -178,7 +178,7 @@ printf "${ULINE}Shell command: ${BOLD}${BLUE}<$INPUT $COMMAND_WITH_PATH | wc -l 
 printf "${ULINE}Pipex command: ${BOLD}${BLUE}./pipex $INPUT "$COMMAND_WITH_PATH" \"wc -l\" $OUTPUT_PIPEX${NC}\n"
 ./pipex $INPUT $COMMAND_WITH_PATH "wc -l" $OUTPUT_PIPEX
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -198,7 +198,7 @@ if ! < "$CMD"; then
     echo "No such file or directory" > $OUTPUT_PIPEX
 fi
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -219,7 +219,7 @@ if [[ ${PIPESTATUS[0]} -ne 1 ]]; then
     echo "The first command in the pipeline failed." > $OUTPUT_PIPEX
 fi
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -240,7 +240,7 @@ if [[ ${PIPESTATUS[1]} -ne 1 ]]; then
     echo "The second command in the pipeline failed." > $OUTPUT_PIPEX
 fi
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -261,7 +261,7 @@ if [[ ${PIPESTATUS[0]} -ne 1 && ${PIPESTATUS[1]} -ne 1 ]]; then
     echo "Both commands in the pipeline failed." > $OUTPUT_PIPEX
 fi
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -271,8 +271,8 @@ fi
 ##
 ((num++))
 printf "\r\n${color}* $num: %s${NC}\n" "Output file can not be opened. Permission denied."
-# touch Tests/invalid_output.txt
-# chmod 000 Tests/invalid_output.txt
+touch Tests/invalid_output.txt
+chmod 000 Tests/invalid_output.txt
 printf "${ULINE}Shell command: ${BOLD}${BLUE}<$INPUT cat | wc -l > $OUTPUT_INVALID${NC}\n"
 if ! cat "$INPUT" | wc -l > "$OUTPUT_INVALID" 2>/dev/null; then
     echo "Permission denied." > $OUTPUT_EXPECTED
@@ -284,7 +284,7 @@ if [ $? -ne 126 ]; then
     echo "Permission denied." > $OUTPUT_PIPEX
 fi
 
-compare_outputs num
+compare_outputs $num
 
 if [ $LEAK_TOGGLE -eq 1 ]; then
     printf "Leak check:${BLUE}\n"
@@ -300,7 +300,7 @@ printf "${ULINE}Pipex command: ${BOLD}${BLUE}./pipex $INPUT_INFINITE \"cat\" \"h
 ./pipex $INPUT_INFINITE "cat" "head -1" $OUTPUT_PIPEX
 TIMEOUT_DURATION=10
 START_TIME=$(date +%s)
-timeout $TIMEOUT_DURATION ./pipex /dev/urandom "cat" "head -1" ot.txt
+timeout $TIMEOUT_DURATION ./pipex /dev/urandom "cat" "head -1" $OUTPUT_PIPEX
 EXIT_STATUS=$?
 END_TIME=$(date +%s)
 ELAPSED_TIME=$(($END_TIME - $START_TIME))
